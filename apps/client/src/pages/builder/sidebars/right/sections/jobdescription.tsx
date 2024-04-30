@@ -51,6 +51,7 @@ export const JobDescriptionSection = () => {
   const setSoftSkills = useResumeStore((state) => state.setSoftSkills);
   const notes = useResumeStore((state) => state.resume.data.metadata.notes);
   const jd = useResumeStore((state) => state.jobdescription);
+  const resume = useResumeStore((state) => state.resume);
 
   var score = useResumeStore((state) => state.score) as number;
   var hardSkills = useResumeStore((state) => state.hardSkills) as string[];
@@ -60,7 +61,7 @@ export const JobDescriptionSection = () => {
     var formatJd = jd.replace(/<p>/g, '');
     formatJd = formatJd.replace(/<\/p>/g, '');
 
-    var score = await getScore( { resume: formatJd, description: formatJd });
+    var score = await getScore( { resume: JSON.stringify(resume.data), description: formatJd });
 
     setScore(score);
 
