@@ -17,16 +17,16 @@ type ResumeStore = {
 
   jobdescription: string;
   score: unknown;
-  hardSkills: unknown;
-  softSkills: unknown;
+  hardSkills: unknown[];
+  softSkills: unknown[];
 
   // Actions
   setValue: (path: string, value: unknown) => void;
   setJobDescription: (description: string) => void;
   setScore: (value: unknown) => void;
 
-  setHardSkills: (value: unknown) => void;
-  setSoftSkills: (value: unknown) => void;
+  setHardSkills: (value: string[]) => void;
+  setSoftSkills: (value: string[]) => void;
 
   // Custom Section Actions
   addSection: () => void;
@@ -41,11 +41,15 @@ export const useResumeStore = create<ResumeStore>()(
       score: 0,
       hardSkills: [],
       softSkills: [],
-      setHardSkills: (skillArr : unknown) => {
-
+      setHardSkills: (skillArr : unknown[]) => {
+        set((state) => {
+          state.hardSkills = skillArr;
+        });
       },
-      setSoftSkills: (skillArr : unknown) => {
-
+      setSoftSkills: (skillArr : string[]) => {
+        set((state) => {
+          state.softSkills = skillArr;
+        });
       },
       setJobDescription: (description : string) => {
         set((state) => {
