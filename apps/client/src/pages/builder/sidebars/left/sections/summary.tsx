@@ -18,14 +18,15 @@ export const GenerateSummaryUrl = BaseUrl + "/get-resume-summary"
 export const SummarySection = () => {
 
   const setValue = useResumeStore((state) => state.setValue);
+  const resume = useResumeStore((state) => state.resume);
   var section = useResumeStore(
     (state) => state.resume.data.sections.summary ?? defaultSections.summary,
   );
 
-  const generateSummary = async (data: string) => {
+  const generateSummary = async () => {
     const response = await axios.post<unknown, AxiosResponse<string>, string>(
       GETHARDSKILLURL,
-      data,
+      JSON.stringify(resume.data),
     );
 
     setValue("sections.summary.content", response.data);
