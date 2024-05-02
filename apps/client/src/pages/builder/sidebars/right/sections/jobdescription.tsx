@@ -116,7 +116,7 @@ export const JobDescriptionSection = () => {
 
     var sharedSkills = userHardSkillsDto.filter(skill => hardSkills.includes(skill));
     // Count the shared skills
-    if(sharedSkills.length >= 2 && score < 50)
+    if(sharedSkills.length >= 2 && parseInt(String(score)) < 50)
     {
       setScore(score + sharedSkills.length * 5);
     }
@@ -128,7 +128,7 @@ export const JobDescriptionSection = () => {
     var softSkills = await getSoftSkills({ message: formatJd });
     setSoftSkills(softSkills);
   };
-  const isMatched = parseInt(score) >= 50;
+  const isMatched = parseInt(String(score)) >= 50;
 
 
   const [openDialog, setOpenDialog] = useState(false);
