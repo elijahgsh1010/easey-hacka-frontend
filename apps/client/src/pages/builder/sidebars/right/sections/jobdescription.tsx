@@ -85,7 +85,6 @@ export const JobDescriptionSection = () => {
       </Button>
 
       <div className="text-center">
-        {/* change score to {score} */}
         <div className="flex items-center justify-center mb-3">
           <svg className="transform -rotate-90 w-72 h-72">
             <circle cx="145" cy="145" r="120" stroke={isMatched ? '#316c38' : '#472e2e'} strokeWidth="30" fill="transparent" className="text-gray-700" />
@@ -109,14 +108,22 @@ export const JobDescriptionSection = () => {
       </div>
 
       <h1><b>Hard skills:</b></h1>
-      <div className="hardSkills">
-        {hardSkills.map((s, index) => <span key={index} className="hardSkills bg-white text-black text-center px-4 mr-2 rounded-full py-1">{s} </span>)}
+      <div className="hardSkills flex flex-wrap gap-2 gap-y-4">
+        {hardSkills.map((s, index) =>
+          <div key={index} className="">
+            <span className={`mb-3 text-center px-4 rounded-full py-1 ${['Javascript', 'Vue JS'].includes(s) ? 'bg-green-500 text-white' : 'bg-white text-black'}`}>{s} </span>
+          </div>
+        )}
       </div>
 
       <h1><b>Soft skills:</b></h1>
-      <div className="softSkills">
-        {softSkills.map((s, index) => <span key={index} className="softSkills bg-white text-black text-center px-4 mr-2 rounded-full py-1">{s} </span>)}
-      </div>
+      <div className="softSkills flex flex-wrap gap-2 gap-y-4">
+        {softSkills.map((s, index) =>
+          <div key={index} className="">
+            <span className={`mb-3 text-center px-4 rounded-full py-1 ${['Problem Solving'].includes(s) ? 'bg-green-500 text-white' : 'bg-white text-black'}`}>{s} </span>
+          </div>
+        )}
+        </div>
 
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">

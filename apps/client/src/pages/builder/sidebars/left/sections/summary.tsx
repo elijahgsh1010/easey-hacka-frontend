@@ -1,5 +1,5 @@
 import { defaultSections } from "@reactive-resume/schema";
-import { RichInput } from "@reactive-resume/ui";
+import { Button, RichInput } from "@reactive-resume/ui";
 import { cn } from "@reactive-resume/utils";
 
 import { AiActions } from "@/client/components/ai-actions";
@@ -23,6 +23,9 @@ export const SummarySection = () => {
         </div>
 
         <div className="flex items-center gap-x-2">
+          <Button variant="outline" className="mr-auto">
+        <span className="">Generate</span>
+      </Button>
           <SectionOptions id="summary" />
         </div>
       </header>
