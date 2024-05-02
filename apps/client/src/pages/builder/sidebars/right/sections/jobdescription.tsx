@@ -14,16 +14,28 @@ import get from "lodash.get";
 import {motion} from "framer-motion";
 import React, { useState } from 'react';
 
-const BaseUrl = "https://localhost:7172/Job"
+const BaseUrl = "https://53ff-2406-3003-2006-8972-875-5ce9-c73c-9b27.ngrok-free.app/Job"
 export const GETHARDSKILLURL = BaseUrl + "/predict-hard-skills"
-export const GETSOFTSKILLURL = BaseUrl + "/Job/predict-soft-skills"
-export const GETSCOREURL = BaseUrl + "/Job/predict-similarity"
-export const GETRECOMMENDATIONS = BaseUrl + "/Job/predict-similarity"
+
+export const GETUSERHARDSKILLURL = BaseUrl + "/predict-user-hard-skills"
+export const GETSOFTSKILLURL = BaseUrl + "/predict-soft-skills"
+export const GETSCOREURL = BaseUrl + "/predict-similarity"
+export const GETRECOMMENDATIONS = BaseUrl + "/get-similar-jobs"
 
 export const getHardSkills = async (data: unknown) => {
 
   const response = await axios.post<unknown, AxiosResponse<string[]>, unknown>(
     GETHARDSKILLURL,
+    data,
+  );
+
+  return response.data;
+};
+
+export const getUserHardSkills = async (data: unknown) => {
+
+  const response = await axios.post<unknown, AxiosResponse<string[]>, unknown>(
+    GETUSERHARDSKILLURL,
     data,
   );
 
@@ -99,8 +111,15 @@ export const JobDescriptionSection = () => {
     var hardSkills = await getHardSkills({ message: formatJd});
     setHardSkills(hardSkills);
 
-    var userHardSkillsDto = await getHardSkills({ message: JSON.stringify(resume.data)}) as any[];
+    var userHardSkillsDto = await getUserHardSkills({ message: JSON.stringify(resume.data)}) as any[];
     setUserHardSkills(userHardSkillsDto);
+
+    var sharedSkills = userHardSkillsDto.filter(skill => hardSkills.includes(skill));
+    // Count the shared skills
+    if(sharedSkills.length >= 2 && score < 50)
+    {
+      setScore(score + sharedSkills.length * 5);
+    }
 
     var userSoftSkillsDto = await getSoftSkills({ message: JSON.stringify(resume.data)}) as any[];
     setUserSoftSkills(userSoftSkillsDto);
