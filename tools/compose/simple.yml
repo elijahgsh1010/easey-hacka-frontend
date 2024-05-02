@@ -57,7 +57,7 @@ services:
     # image: amruthpillai/reactive-resume:latest
     restart: unless-stopped
     ports:
-      - 3001:3000
+      - 3001:3001
     build:
       context: ../../
       dockerfile: Dockerfile
