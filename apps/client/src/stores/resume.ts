@@ -12,6 +12,18 @@ import { useStoreWithEqualityFn } from "zustand/traditional";
 
 import { debouncedUpdateResume } from "../services/resume";
 
+export class Recommendation {
+  title: string;
+  description: string;
+  company: string;
+
+  constructor(title: string, description: string, company: string) {
+    this.title = title;
+    this.description = description;
+    this.company = company;
+  }
+}
+
 type ResumeStore = {
   resume: ResumeDto;
 
@@ -19,6 +31,9 @@ type ResumeStore = {
   score: unknown;
   hardSkills: unknown[];
   softSkills: unknown[];
+  userHardSkills: unknown[];
+  userSoftSkills: unknown[];
+  recommendations: Recommendation[];
 
   // Actions
   setValue: (path: string, value: unknown) => void;
@@ -27,6 +42,10 @@ type ResumeStore = {
 
   setHardSkills: (value: string[]) => void;
   setSoftSkills: (value: string[]) => void;
+  setUserHardSkills: (value: string[]) => void;
+  setUserSoftSkills: (value: string[]) => void;
+
+  setRecommendations: (value: Recommendation[]) => void;
 
   // Custom Section Actions
   addSection: () => void;
@@ -41,6 +60,9 @@ export const useResumeStore = create<ResumeStore>()(
       score: 0,
       hardSkills: [],
       softSkills: [],
+      userHardSkills: [],
+      userSoftSkills: [],
+      recommendations: [],
       setHardSkills: (skillArr : unknown[]) => {
         set((state) => {
           state.hardSkills = skillArr;
@@ -51,11 +73,26 @@ export const useResumeStore = create<ResumeStore>()(
           state.softSkills = skillArr;
         });
       },
+      setUserHardSkills: (skillArr : string[]) => {
+        set((state) => {
+          state.userHardSkills = skillArr;
+        });
+      },
+      setUserSoftSkills: (skillArr : string[]) => {
+        set((state) => {
+          state.userSoftSkills = skillArr;
+        });
+      },
       setJobDescription: (description : string) => {
         set((state) => {
           state.jobdescription = description;
 
           debouncedUpdateResume(JSON.parse(JSON.stringify(state.resume)));
+        });
+      },
+      setRecommendations: (recommendations : Recommendation[]) => {
+        set((state) => {
+          state.recommendations  = recommendations;
         });
       },
       setScore: (value: unknown) => {
