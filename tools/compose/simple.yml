@@ -57,7 +57,7 @@ services:
     # image: amruthpillai/reactive-resume:latest
     restart: unless-stopped
     ports:
-      - 3001:3001
+      - 3000:3000
     build:
       context: ../../
       dockerfile: Dockerfile
@@ -68,16 +68,16 @@ services:
       - chrome
     environment:
       # -- Environment Variables --
-      PORT: 3001
+      PORT: 3000
       NODE_ENV: production
 
       # -- URLs --
-      PUBLIC_URL: http://localhost:3001
+      PUBLIC_URL: http://localhost:3000
       STORAGE_URL: http://localhost:9000
 
       # -- Printer (Chrome) --
       CHROME_TOKEN: chrome_token
-      CHROME_URL: ws://chrome:3001
+      CHROME_URL: ws://chrome:3000
 
       # -- Database (Postgres) --
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/postgres
