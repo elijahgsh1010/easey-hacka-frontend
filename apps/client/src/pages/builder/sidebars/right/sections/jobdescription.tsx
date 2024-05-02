@@ -73,6 +73,8 @@ export const JobDescriptionSection = () => {
     var softSkills = await getSoftSkills({ description: formatJd });
     setSoftSkills(softSkills);
   };
+  const isMatched = parseInt(score) >= 50;
+
 
   return (
     <section id="jobdescription" className="grid gap-y-6">
@@ -82,21 +84,38 @@ export const JobDescriptionSection = () => {
         <span className="ml-2">{t`Predict`}</span>
       </Button>
 
-      <div>
-        <h3 className={cn("text-4xl font-bold blur-none transition-all")}>
-          {score}
-        </h3>
-        <p className="opacity-75">{t`Score`}</p>
+      <div className="text-center">
+        {/* change score to {score} */}
+        <div className="flex items-center justify-center mb-3">
+          <svg className="transform -rotate-90 w-72 h-72">
+            <circle cx="145" cy="145" r="120" stroke={isMatched ? '#316c38' : '#472e2e'} strokeWidth="30" fill="transparent" className="text-gray-700" />
+            <circle
+              cx="145"
+              cy="145"
+              r="120"
+              stroke={isMatched ? '#0faf22' : '#c21f1f'}
+              strokeWidth="30"
+              fill="transparent"
+              strokeDasharray={2 * 22 / 7 * 120}
+              strokeDashoffset={2 * 22 / 7 * 120 - score / 100 * 2 * 22 / 7 * 120}
+              className="text-blue-500"
+            />
+          </svg>
+          <span className="absolute text-5xl">{`${score}%`}</span>
+        </div>
+        {/* <h3 className={cn("text-4xl font-bold blur-none transition-all")}> {score}</h3> */}
+        <span className={`rounded-full text-white px-3 py-1 ${isMatched ? 'bg-green-500' : 'bg-red-500'}`}>{`${isMatched ? 'Qualified!' : 'Not Qualified'}`}</span>
+        {/* <p className="opacity-75">{t`Score`}</p> */}
       </div>
 
       <h1><b>Hard skills:</b></h1>
       <div className="hardSkills">
-        {hardSkills.map((s, index) => <span key={index} className="hardSkills">{s}, </span>)}
+        {hardSkills.map((s, index) => <span key={index} className="hardSkills bg-white text-black text-center px-4 mr-2 rounded-full py-1">{s} </span>)}
       </div>
 
       <h1><b>Soft skills:</b></h1>
       <div className="softSkills">
-        {softSkills.map((s, index) => <span key={index} className="softSkills">{s}, </span>)}
+        {softSkills.map((s, index) => <span key={index} className="softSkills bg-white text-black text-center px-4 mr-2 rounded-full py-1">{s} </span>)}
       </div>
 
       <header className="flex items-center justify-between">
