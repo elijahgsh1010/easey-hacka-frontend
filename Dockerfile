@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:experimental
 # --- Base Image ---
 FROM node:lts-bullseye-slim AS base
 
@@ -15,8 +16,8 @@ FROM base AS build
 ENV NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN
 
 COPY .npmrc package.json pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-
+#RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
 COPY . .
 
 RUN pnpm run build
@@ -27,7 +28,8 @@ FROM base AS release
 RUN apt update && apt install -y dumb-init --no-install-recommends
 
 COPY --chown=node:node --from=build /app/.npmrc /app/package.json /app/pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN #--mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod
 
 COPY --chown=node:node --from=build /app/dist ./dist
 COPY --chown=node:node --from=build /app/tools/prisma ./tools/prisma
