@@ -21,6 +21,7 @@ import { Providers } from "../providers";
 import { AuthGuard } from "./guards/auth";
 import { GuestGuard } from "./guards/guest";
 import { authLoader } from "./loaders/auth";
+import { JobsRecommendation } from "../pages/builder/job-recommendation";
 
 export const routes = createRoutesFromElements(
   <Route element={<Providers />}>
@@ -74,9 +75,17 @@ export const routes = createRoutesFromElements(
       <Route element={<AuthGuard />}>
         <Route element={<BuilderLayout />}>
           <Route path=":id" loader={builderLoader} element={<BuilderPage />} />
+          {/* <Route path="jobs-recommendation" element={<JobsRecommendation />} /> */}
 
           <Route index element={<Navigate to="/dashboard/resumes" replace />} />
         </Route>
+      </Route>
+    </Route>
+    <Route path="jobs">
+      <Route element={<AuthGuard />}>
+        <Route path="recommendation" element={<JobsRecommendation />} />
+
+        <Route index element={<Navigate to="/dashboard/resumes" replace />} />
       </Route>
     </Route>
 
